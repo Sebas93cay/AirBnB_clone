@@ -5,6 +5,7 @@ from contextlib import redirect_stdout
 from models.base_model import BaseModel
 from datetime import datetime
 import unittest
+from models import storage
 
 
 class testBaseModel(unittest.TestCase):
@@ -53,7 +54,7 @@ class testBaseModel(unittest.TestCase):
         r = {"__class__": "BaseModel",
              "id": b1.id,
              "created_at": b1.created_at.isoformat(),
-             "updated_at": b1.updated_at.isoformat() }
+             "updated_at": b1.updated_at.isoformat()}
         self.assertDictEqual(b1.to_dict(), r)
 
     def test_base_model_to_dict_parameters(self):
@@ -71,3 +72,13 @@ class testBaseModel(unittest.TestCase):
         self.assertDictEqual(b1.to_dict(), b2.to_dict())
         self.assertIsNot(b1, b2)
 
+    def test_base_model_storage_all(self):
+        b1 = BaseModel()
+        # assertEqual(True, storage.all()[
+        self.assertIn(b1, storage.all().values())
+
+    def test_base_model_withkey_storage_alll(self):
+        b1 = BaseModel(color='green')
+        # print(b1)
+        # print(storage.all())
+        self.assertIn(b1, storage.all().values())
