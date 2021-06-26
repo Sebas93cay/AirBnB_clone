@@ -22,7 +22,7 @@ class FileStorage:
             for k, v in tmp_dir.items():
                 self.__objects[k] = BaseModel(**v)
         except:
-            content = None
+            pass
 
     def save(self):
         eldir = {}

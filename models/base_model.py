@@ -47,7 +47,7 @@ class BaseModel:
         to string object in ISO format %Y-%m-%dT%H:%M:%S.%f
         (ex: 2017-06-14T22:31:03.285259)
         """
-        d = self.__dict__
+        d = self.__dict__.copy()
         d['__class__'] = type(self).__name__
         d['created_at'] = self.created_at.isoformat()
         d['updated_at'] = self.updated_at.isoformat()
