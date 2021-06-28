@@ -4,4 +4,7 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """Define User class inherint BaseModel"""
-    pass
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""
