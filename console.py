@@ -119,9 +119,39 @@ class HBNBCommand(cmd.Cmd):
             self.file.close()
             self.file = None
 
-    # where HBNBCommand.function is:
-    def function(self):
-        return int(input("prompt> "))
+    def do_User(self, arg):
+        """Function to User command in console"""
+        self.class_functions(storage.classes['User'], arg)
+
+    def do_City(self, arg):
+        """Function to City command in console"""
+        self.class_functions(storage.classes['City'], arg)
+
+    def do_BaseModel(self, arg):
+        """Function to BaseModel command in console"""
+        self.class_functions(storage.classes['BaseModel'], arg)
+
+    def do_State(self, arg):
+        """Function to State command in console"""
+        self.class_functions(storage.classes['State'], arg)
+
+    def do_Amenity(self, arg):
+        """Function to Amenity command in console"""
+        self.class_functions(storage.classes['Amenity'], arg)
+
+    def do_Place(self, arg):
+        """Function to Place command in console"""
+        self.class_functions(storage.classes['Place'], arg)
+
+    def do_Review(self, arg):
+        """Function to Review command in console"""
+        self.class_functions(storage.classes['Review'], arg)
+
+    def class_functions(self, cls, arg):
+        if arg == '.all()':
+            self.do_all(cls.__name__)
+        elif arg == '.count()':
+            print(sum([1 for o in storage.all().values() if type(o) == cls]))
 
 
 def parse(arg):
