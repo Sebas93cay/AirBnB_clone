@@ -5,7 +5,7 @@ This script contains the base model
 
 import uuid
 from datetime import date, datetime
-from models import storage
+import models
 
 
 class BaseModel:
@@ -30,7 +30,7 @@ class BaseModel:
                     self.updated_at, '%Y-%m-%dT%H:%M:%S.%f')
 
         if 'id' not in kwargs.keys():
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self) -> str:
         """str function"""
@@ -42,7 +42,7 @@ class BaseModel:
         Save the instance into a json file
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
