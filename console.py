@@ -7,10 +7,14 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
-    intro = 'Welcome babe'
     prompt = '(hbnb) '
-    file = None
+    file=None
+
+
+
+
 
 
     def do_create(self, arg):
@@ -112,6 +116,11 @@ class HBNBCommand(cmd.Cmd):
         if self.file:
             self.file.close()
             self.file = None
+
+    # where HBNBCommand.function is:
+    def function(self):
+        return int(input("prompt> "))
+
 
 
 def parse(arg):

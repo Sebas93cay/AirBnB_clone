@@ -52,9 +52,9 @@ class testBaseModel(unittest.TestCase):
     def test_base_model_to_dict(self):
         b1 = BaseModel()
         r = {"__class__": "BaseModel",
-             "id": b1.id,
-             "created_at": b1.created_at.isoformat(),
-             "updated_at": b1.updated_at.isoformat()}
+                "id": b1.id,
+                "created_at": b1.created_at.isoformat(),
+                "updated_at": b1.updated_at.isoformat()}
         self.assertDictEqual(b1.to_dict(), r)
 
     def test_base_model_to_dict_parameters(self):
