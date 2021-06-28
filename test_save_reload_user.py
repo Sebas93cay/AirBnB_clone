@@ -8,7 +8,7 @@ print("-- Reloaded objects --")
 for obj_id in all_objs.keys():
     obj = all_objs[obj_id]
     print(obj)
-
+"""
 print("-- Create a new User --")
 my_user = User()
 my_user.first_name = "Betty"
@@ -25,4 +25,4 @@ my_user2.email = "airbnb2@holbertonshool.com"
 my_user2.password = "root"
 my_user2.save()
 print(my_user2)
-
+"""

@@ -19,7 +19,7 @@ class HBNBCommand(cmd.Cmd):
             arg = [arg]
 
         if self.validation_arguments(arg, 1):
-            b = BaseModel()
+            b = storage.classes[arg[0]]()
             b.save()
             print(b.id)
 
@@ -52,10 +52,9 @@ class HBNBCommand(cmd.Cmd):
         based or not on the class name
         """
         if not arg:
-            print(storage.all())
+            print([str(o) for o in storage.all().values()])
         elif self.validation_arguments([arg], 1):
-            objects = {k: v for k,v in storage.all().items() if arg in k}
-            print(objects)
+            print([str(o) for o in storage.all().values() if arg == type(o).__name__])
 
     def do_update(self, arg):
         """
@@ -67,10 +66,15 @@ class HBNBCommand(cmd.Cmd):
             arg = arg.split(' ')
 
         if self.validation_arguments(arg, 3):
-            b = storage.all()[arg[0] + "." + arg[1]]
-            setattr(b, arg[2], arg[3])
-            b.save()
-            print(b)
+            try:
+                b = storage.all()[arg[0] + "." + arg[1]]
+                clsAttr = type(getattr(b, arg[2], ""))
+                setattr(b, arg[2], clsAttr(arg[3]))
+                b.save()
+            except ValueError as e:
+                print(e)
+                
+#            print(b)
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -85,11 +89,11 @@ class HBNBCommand(cmd.Cmd):
 
     def validation_arguments(self, args_array, maxValidations):
         """validate array of arguments"""
-
+#update [class, id, attr, val]
         if 1 <= maxValidations and len(args_array) < 1:
             print("** class name missing **")
             return False
-        elif 1 <= maxValidations and args_array[0] not in ["BaseModel"]:
+        elif 1 <= maxValidations and args_array[0] not in storage.classes.keys():
             print("** class doesn't exist **")
             return False
         elif 2 <= maxValidations and len(args_array) < 2:
