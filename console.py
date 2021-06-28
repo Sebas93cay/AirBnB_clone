@@ -3,6 +3,7 @@
 This module contains the console
 """
 
+
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -10,12 +11,7 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    file=None
-
-
-
-
-
+    file = None
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
@@ -58,12 +54,12 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print(storage.all())
         elif self.validation_arguments([arg], 1):
-            objects = {k: v for k,v in storage.all().items() if arg in k}
+            objects = {k: v for k, v in storage.all().items() if arg in k}
             print(objects)
 
     def do_update(self, arg):
         """
-        Updates an instance based on the class name and id by 
+        Updates an instance based on the class name and id by
         adding or updating attribute
         """
 
@@ -100,7 +96,8 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return False
         elif 2 <= maxValidations and \
-             args_array[0] + "." + args_array[1] not in storage.all().keys():
+                args_array[0] + "." + args_array[1] not in \
+                storage.all().keys():
             print("** no instance found **")
             return False
         elif 3 <= maxValidations and len(args_array) < 3:
@@ -120,7 +117,6 @@ class HBNBCommand(cmd.Cmd):
     # where HBNBCommand.function is:
     def function(self):
         return int(input("prompt> "))
-
 
 
 def parse(arg):

@@ -10,7 +10,8 @@ class MyTestCase(unittest.TestCase):
 
     def test_basic_io(self):
         """This is just a example test, don't forget to delete eventually"""
-        with patch('sys.stdin', StringIO('Darcy\n')) as stdin, patch('sys.stdout', new_callable=StringIO) as stdout:
+        with patch('sys.stdin', StringIO('Darcy\n')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
             name = input('What is your name? ')
             print('Hello %s' % name)
 
@@ -19,14 +20,29 @@ class MyTestCase(unittest.TestCase):
 
     def test_quit(self):
         """Test quiting the console"""
-        with patch('sys.stdin', StringIO('quit\n')) as stdin, patch('sys.stdout', new_callable=StringIO) as stdout:
+        with patch('sys.stdin', StringIO('quit\n')) as\
+                stdin, patch('sys.stdout',
+                             new_callable=StringIO) as stdout:
             HBNBCommand().cmdloop()
             self.assertEqual(stdout.getvalue(), '(hbnb) ')
-        with patch('sys.stdin', StringIO('\nquit\n')) as stdin, patch('sys.stdout', new_callable=StringIO) as stdout:
+        with patch('sys.stdin', StringIO('\nquit\n')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
             HBNBCommand().cmdloop()
             self.assertEqual(stdout.getvalue(), '(hbnb) (hbnb) ')
-    
+
     def test_help(self):
-        with patch('sys.stdin', StringIO('help\n')) as stdin, patch('sys.stdout', new_callable=StringIO) as stdout:
+
+        with patch('sys.stdin', StringIO('help\n')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
             HBNBCommand().cmdloop()
-            self.assertEqual(stdout.getvalue(), '(hbnb) \nDocumented commands (type help <topic>):\n========================================\nEOF  all  create  destroy  help  quit  show  update\n\n(hbnb) \n') 
+            self.assertEqual(stdout.getvalue(),
+                             '(hbnb) \nDocumented commands (type help <topic>):\n\
+========================================\nEOF  all\
+  create  destroy  help  quit  show  update\n\n(hbnb) \n')
+
+    def test_help_show(self):
+        with patch('sys.stdin', StringIO('help show\n')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
+            HBNBCommand().cmdloop()
+            self.assertEqual(stdout.getvalue(), '(hbnb) ' +
+                             HBNBCommand.do_show.__doc__ + '\n(hbnb) \n')
