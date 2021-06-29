@@ -65,17 +65,20 @@ class HBNBCommand(cmd.Cmd):
         adding or updating attribute
         """
         if arg:
-            arg = arg.replace(' ', ',')
-
-        print(arg)
-        arg = json.loads("[" + str(arg).replace("'", '"') + "]")
-        print(arg)
+            arg = arg.split(' ')
 
         if self.validation_arguments(arg, 3):
+            arg = '["' + arg[0] + '","' + arg[1] + '","' + arg[2] + '", ' + arg[3] + "]"
+            arg = json.loads(arg)
+#            print(arg)
             try:
                 b = storage.all()[arg[0] + "." + arg[1]]
-                clsAttr = type(getattr(b, arg[2], ""))
-                setattr(b, arg[2], clsAttr(arg[3]))
+
+                if argl[2] in b.__class__.__dict__.keys()
+                    clsAttr = type(getattr(b, arg[2], ""))
+                    setattr(b, arg[2], clesAttr(arg[3]))
+                else:
+                    setattr(b, arg[2], arg[3])
                 b.save()
             except ValueError as e:
                 print(e)
