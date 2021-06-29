@@ -13,7 +13,7 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    file = None
+    # file = None
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
@@ -21,9 +21,9 @@ class HBNBCommand(cmd.Cmd):
             arg = [arg]
 
         if self.validation_arguments(arg, 1):
-            b = storage.classes[arg[0]]()
-            b.save()
-            print(b.id)
+            obj = storage.classes[arg[0]]()
+            obj.save()
+            print(obj.id)
 
         return False
 
@@ -82,13 +82,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
-        self.close()
+        # self.close()
         return True
+
+    def emptyline(self):
+        pass
 
     def do_EOF(self, arg):
         """Quit command to exit the program"""
-        print("")
-        self.close()
+        # print("")
+        # self.close()
         return True
 
     def validation_arguments(self, args_array, maxValidations):
@@ -117,10 +120,10 @@ class HBNBCommand(cmd.Cmd):
 
         return True
 
-    def close(self):
-        if self.file:
-            self.file.close()
-            self.file = None
+    # def close(self):
+        # if self.file:
+        # self.file.close()
+        # self.file = None
 
     def class_functions(self, cls, arg):
         if arg == 'all()':
