@@ -5,6 +5,8 @@ This module contains the console
 
 
 import cmd
+import json
+from models.review import Review
 from models.base_model import BaseModel
 from models import storage
 
@@ -62,9 +64,11 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class name and id by
         adding or updating attribute
         """
-
         if arg:
             arg = arg.split(' ')
+
+        print("inside do_update")
+        print(arg)
 
         if self.validation_arguments(arg, 3):
             try:
@@ -74,8 +78,6 @@ class HBNBCommand(cmd.Cmd):
                 b.save()
             except ValueError as e:
                 print(e)
-
-#            print(b)
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -90,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
 
     def validation_arguments(self, args_array, maxValidations):
         """validate array of arguments"""
-# update [class, id, attr, val]
+
         if 1 <= maxValidations and len(args_array) < 1:
             print("** class name missing **")
             return False
@@ -119,39 +121,64 @@ class HBNBCommand(cmd.Cmd):
             self.file.close()
             self.file = None
 
-    def do_User(self, arg):
-        """Function to User command in console"""
-        self.class_functions(storage.classes['User'], arg)
+#     def do_User(self, arg):
+        # """Function to User command in console"""
+        # self.class_functions(storage.classes['User'], arg)
 
-    def do_City(self, arg):
-        """Function to City command in console"""
-        self.class_functions(storage.classes['City'], arg)
+    # def do_City(self, arg):
+        # """Function to City command in console"""
+        # self.class_functions(storage.classes['City'], arg)
 
-    def do_BaseModel(self, arg):
-        """Function to BaseModel command in console"""
-        self.class_functions(storage.classes['BaseModel'], arg)
+    # def do_BaseModel(self, arg):
+        # """Function to BaseModel command in console"""
+        # self.class_functions(storage.classes['BaseModel'], arg)
 
-    def do_State(self, arg):
-        """Function to State command in console"""
-        self.class_functions(storage.classes['State'], arg)
+    # def do_State(self, arg):
+        # """Function to State command in console"""
+        # self.class_functions(storage.classes['State'], arg)
 
-    def do_Amenity(self, arg):
-        """Function to Amenity command in console"""
-        self.class_functions(storage.classes['Amenity'], arg)
+    # def do_Amenity(self, arg):
+        # """Function to Amenity command in console"""
+        # self.class_functions(storage.classes['Amenity'], arg)
 
-    def do_Place(self, arg):
-        """Function to Place command in console"""
-        self.class_functions(storage.classes['Place'], arg)
+    # def do_Place(self, arg):
+        # """Function to Place command in console"""
+        # self.class_functions(storage.classes['Place'], arg)
 
-    def do_Review(self, arg):
-        """Function to Review command in console"""
-        self.class_functions(storage.classes['Review'], arg)
+    # def do_Review(self, arg):
+        # """Function to Review command in console"""
+        # self.class_functions(storage.classes['Review'], arg)
 
     def class_functions(self, cls, arg):
-        if arg == '.all()':
+        if arg == 'all()':
             self.do_all(cls.__name__)
-        elif arg == '.count()':
+        elif arg == 'count()':
             print(sum([1 for o in storage.all().values() if type(o) == cls]))
+        elif arg[:7] == 'show("':
+            self.do_show(cls.__name__+" "+arg[7:-2])
+            print(arg[7:-2])
+        elif arg[:10] == 'destroy("':
+            self.do_destroy(cls.__name__+" "+arg[10:-2])
+        elif arg[:7] == 'update(':
+            entrada = arg[7:-1]
+            entrada = entrada.replace("'", '"')
+            list_arg = json.loads("["+entrada + "]")
+            print(cls.__name__+" "+" ".join(list_arg))
+            if len(list_arg) < 2:
+                self.do_update(cls.__name__+" "+" ".join(list_arg))
+            else:
+                pass
+            # print(self.validation_arguments([cls.__name__] + list_arg, 2))
+
+    def parse_list_args(self, text):
+        print(list_arg)
+
+    def default(self, arg):
+        args = arg.split('.')
+        if args[0] in storage.classes.keys():
+            self.class_functions(storage.classes[args[0]], args[1])
+        else:
+            print("*** Unknown syntax: {}".format(arg))
 
 
 def parse(arg):
