@@ -65,9 +65,10 @@ class HBNBCommand(cmd.Cmd):
         adding or updating attribute
         """
         if arg:
-            arg = arg.split(' ')
+            arg = arg.replace(' ', ',')
 
-        print("inside do_update")
+        print(arg)
+        arg = json.loads("[" + str(arg).replace("'", '"') + "]")
         print(arg)
 
         if self.validation_arguments(arg, 3):
@@ -124,34 +125,6 @@ class HBNBCommand(cmd.Cmd):
         # self.file.close()
         # self.file = None
 
-#     def do_User(self, arg):
-        # """Function to User command in console"""
-        # self.class_functions(storage.classes['User'], arg)
-
-    # def do_City(self, arg):
-        # """Function to City command in console"""
-        # self.class_functions(storage.classes['City'], arg)
-
-    # def do_BaseModel(self, arg):
-        # """Function to BaseModel command in console"""
-        # self.class_functions(storage.classes['BaseModel'], arg)
-
-    # def do_State(self, arg):
-        # """Function to State command in console"""
-        # self.class_functions(storage.classes['State'], arg)
-
-    # def do_Amenity(self, arg):
-        # """Function to Amenity command in console"""
-        # self.class_functions(storage.classes['Amenity'], arg)
-
-    # def do_Place(self, arg):
-        # """Function to Place command in console"""
-        # self.class_functions(storage.classes['Place'], arg)
-
-    # def do_Review(self, arg):
-        # """Function to Review command in console"""
-        # self.class_functions(storage.classes['Review'], arg)
-
     def class_functions(self, cls, arg):
         if arg == 'all()':
             self.do_all(cls.__name__)
@@ -163,18 +136,11 @@ class HBNBCommand(cmd.Cmd):
         elif arg[:10] == 'destroy("':
             self.do_destroy(cls.__name__+" "+arg[10:-2])
         elif arg[:7] == 'update(':
-            entrada = arg[7:-1]
-            entrada = entrada.replace("'", '"')
-            list_arg = json.loads("["+entrada + "]")
-            print(cls.__name__+" "+" ".join(list_arg))
-            if len(list_arg) < 2:
-                self.do_update(cls.__name__+" "+" ".join(list_arg))
-            else:
-                pass
-            # print(self.validation_arguments([cls.__name__] + list_arg, 2))
-
-    def parse_list_args(self, text):
-        print(list_arg)
+            entrada = arg[7:-1].replace("'", '"')
+            list_arg = json.loads("["+ entrada + "]")
+            print(list_arg)
+            inp = cls.__name__ + (" " + " ".join(list_arg)) if list_arg else ""
+            self.do_update(inp)
 
     def default(self, arg):
         args = arg.split('.')
