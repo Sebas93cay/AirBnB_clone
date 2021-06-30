@@ -80,10 +80,9 @@ class HBNBCommand(cmd.Cmd):
                 print(e)
                 print("Value not supported")
                 return False
-            HBNBCommand.update(arg[0], arg[1], arg[2], arg[3])
+            self.update(arg[0], arg[1], arg[2], arg[3])
 
-    @classmethod
-    def update(cls, cls_s, id_s, attribute, value):
+    def update(self, cls_s, id_s, attribute, value):
         """
         Update an object of type cls_s and id id_s
         both cls_s and id_s are strings
