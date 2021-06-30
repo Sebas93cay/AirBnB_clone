@@ -84,6 +84,10 @@ class HBNBCommand(cmd.Cmd):
 
     @classmethod
     def update(cls, cls_s, id_s, attribute, value):
+        """
+        Update an object of type cls_s and id id_s
+        both cls_s and id_s are strings
+        """
         obj = storage.all()[cls_s+"."+id_s]
         if attribute in obj.__class__.__dict__.keys():
             clsAttr = type(getattr(obj, attribute, ""))
