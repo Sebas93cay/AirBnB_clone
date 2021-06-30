@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
+#test a push in a repository cloned
 
 my_model = BaseModel()
 my_model.name = "Holberton"
