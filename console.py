@@ -168,7 +168,8 @@ class HBNBCommand(cmd.Cmd):
                 if len(list_arg) > 1 and type(list_arg[1]) == dict:
                     for key, value in list_arg[1].items():
                         if self.validation_arguments(
-                                [cls.__name__, list_arg[0], key, str(value)], 3):
+                                [cls.__name__, list_arg[0], key,
+                                 str(value)], 3):
                             HBNBCommand.update(
                                 cls.__name__, list_arg[0], key, value)
                 else:
@@ -176,7 +177,8 @@ class HBNBCommand(cmd.Cmd):
                     return False
             elif type(list_arg[1]) == str:
                 if self.validation_arguments(
-                        [cls.__name__, list_arg[0], list_arg[1], str(list_arg[2])], 3):
+                        [cls.__name__, list_arg[0], list_arg[1],
+                         str(list_arg[2])], 3):
                     HBNBCommand.update(
                         cls.__name__, list_arg[0], list_arg[1], list_arg[2])
             else:
