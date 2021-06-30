@@ -83,6 +83,13 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(reader.read(stdout),
                              str(models.storage.all()['User.'+User_id])+"\n")
 
+    def test_count_function(self):
+        with patch('sys.stdout', new=StringIO()) as stdout:
+            HBNBCommand().onecmd('create User')
+            User_id = reader.read(stdout)[:-1]
+            HBNBCommand().onecmd('User.count()')
+            self.assertEqual(reader.read(stdout=stdout), '1'+'\n')
+
     # @patch('console.HBNBCommand')
     # def test_signal_handling(self, mock_print):
         # pid = os.getpid()
