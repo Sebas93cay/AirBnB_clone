@@ -7,8 +7,6 @@ This module contains the console
 import cmd
 import json
 from json.decoder import JSONDecodeError
-from models.review import Review
-from models.base_model import BaseModel
 from models import storage
 
 
@@ -162,8 +160,7 @@ class HBNBCommand(cmd.Cmd):
             entrada = arg[7:-1].replace("'", '"')
             try:
                 list_arg = json.loads("[" + entrada + "]")
-            except JSONDecodeError as e:
-                # print(e)
+            except JSONDecodeError:
                 print("Argument Error")
                 return False
             if len(list_arg) < 3:
@@ -172,7 +169,7 @@ class HBNBCommand(cmd.Cmd):
                         if self.validation_arguments(
                                 [cls.__name__, list_arg[0], key,
                                  str(value)], 3):
-                            HBNBCommand.update(
+                            self.update(
                                 cls.__name__, list_arg[0], key, value)
                 else:
                     print("** arguments missing")
@@ -181,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
                 if self.validation_arguments(
                         [cls.__name__, list_arg[0], list_arg[1],
                          str(list_arg[2])], 3):
-                    HBNBCommand.update(
+                    self.update(
                         cls.__name__, list_arg[0], list_arg[1], list_arg[2])
             else:
                 print("** wrong type of arguments")
