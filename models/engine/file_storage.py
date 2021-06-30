@@ -12,8 +12,11 @@ from models.review import Review
 
 
 class FileStorage:
-    """
-    This class handle all the created object into a json file
+    """This class handle all the created object into a json file
+    Attrs:
+        __file_path (str): file name to save objects
+        __objects (dict): dictionary of BaseModel objects
+        classes (dict): dictionary of classes
     """
     __file_path = 'file.json'
     __objects = {}
