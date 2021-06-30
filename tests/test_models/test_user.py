@@ -33,6 +33,22 @@ class testUser(unittest.TestCase):
             b1.save("str")
             b1.save({})
 
+    def test_user_class_email(self):
+        """check the class attr email in User"""
+        self.assertEqual(str, type(User.email))
+
+    def test_user_class_first_name(self):
+        """check the class attr first_name in User"""
+        self.assertEqual(str, type(User.first_name))
+
+    def test_user_class_password(self):
+        """check the class attr password in User"""
+        self.assertEqual(str, type(User.password))
+
+    def test_user_class_last_name(self):
+        """check the class attr last_name in User"""
+        self.assertEqual(str, type(User.last_name))
+
     def test_user_ids(self):
         """test id instance variable"""
         b1 = User()
