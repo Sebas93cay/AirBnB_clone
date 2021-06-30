@@ -71,18 +71,26 @@ class HBNBCommand(cmd.Cmd):
         if self.validation_arguments(arg, 3):
             arg = '["' + arg[0] + '","' + arg[1] + \
                 '","' + arg[2] + '", ' + arg[3] + "]"
-            arg = json.loads(arg)
             try:
-                b = storage.all()[arg[0] + "." + arg[1]]
-
-                if arg[2] in b.__class__.__dict__.keys():
-                    clsAttr = type(getattr(b, arg[2], ""))
-                    setattr(b, arg[2], clsAttr(arg[3]))
-                else:
-                    setattr(b, arg[2], arg[3])
-                b.save()
-            except ValueError as e:
+                arg = json.loads(arg)
+            except Exception as e:
                 print(e)
+                print("Value not supported")
+                return False
+            self.update(arg[0], arg[1], arg[2], arg[3])
+
+    def update(self, cls_s, id_s, attribute, value):
+        """
+        Update an object of type cls_s and id id_s
+        both cls_s and id_s are strings
+        """
+        obj = storage.all()[cls_s+"."+id_s]
+        if attribute in obj.__class__.__dict__.keys():
+            clsAttr = type(getattr(obj, attribute, ""))
+            setattr(obj, attribute, clsAttr(value))
+        else:
+            setattr(obj, attribute, value)
+        obj.save()
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -95,6 +103,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """Quit command to exit the program"""
+        # print("")
+        # self.close()
         return True
 
     def validation_arguments(self, args_array, maxValidations):
@@ -127,6 +137,64 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         return True
+
+    # def close(self):
+        # if self.file:
+        # self.file.close()
+        # self.file= None
+
+    def class_functions(self, cls, arg):
+        """
+        method for sintax: <clasname>.<method>
+        """
+        if arg == 'all()':
+            self.do_all(cls.__name__)
+        elif arg == 'count()':
+            print(sum([1 for o in storage.all().values() if type(o) == cls]))
+        elif arg[:6] == 'show("':
+            self.do_show(cls.__name__+" "+arg[6:-2])
+        elif arg[:9] == 'destroy("':
+            self.do_destroy(cls.__name__+" "+arg[9:-2])
+        elif arg[:7] == 'update(':
+            entrada = arg[7:-1].replace("'", '"')
+            try:
+                list_arg = json.loads("[" + entrada + "]")
+            except Exception as e:
+                print("Argument Error")
+                print(e)
+                return False
+            if len(list_arg) < 3:
+                if len(list_arg) > 1 and type(list_arg[1]) == dict:
+                    for key, value in list_arg[1].items():
+                        if self.validation_arguments(
+                                [cls.__name__, list_arg[0], key,
+                                 str(value)], 3):
+                            self.update(
+                                cls.__name__, list_arg[0], key, value)
+                else:
+                    print("** arguments missing")
+                    return False
+            elif type(list_arg[1]) == str:
+                if self.validation_arguments(
+                        [cls.__name__, list_arg[0], list_arg[1],
+                         str(list_arg[2])], 3):
+                    self.update(
+                        cls.__name__, list_arg[0], list_arg[1], list_arg[2])
+            else:
+                print("** wrong type of arguments")
+                return False
+
+    def default(self, arg):
+        """
+        This functions validate if input does not
+        match with any of the do_methods
+        This functions checks if sintax is <classname>.<method>
+        """
+        args = arg.split('.')
+        if args[0] in storage.classes.keys():
+            self.class_functions(storage.classes[args[0]], args[1])
+        else:
+            print("*** Unknown syntax: {}".format(arg))
 
 
 if __name__ == '__main__':
