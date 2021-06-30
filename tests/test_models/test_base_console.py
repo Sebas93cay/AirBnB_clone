@@ -11,6 +11,9 @@ import signal
 
 
 class MyTestCase(unittest.TestCase):
+    """
+    Test console commands
+    """
 
     def test_basic_io(self):
         """This is just a example test, don't forget to delete eventually"""
@@ -34,36 +37,31 @@ class MyTestCase(unittest.TestCase):
             HBNBCommand().cmdloop()
             self.assertEqual(stdout.getvalue(), '(hbnb) (hbnb) ')
 
-    # def test_help(self):
+    def test_help(self):
+        """Test help command"""
+        with patch('sys.stdin', StringIO('help\n')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
+            HBNBCommand().cmdloop()
+            self.assertEqual(stdout.getvalue(),
+                             '(hbnb) \nDocumented commands (type help <topic>):\n\
+========================================\nEOF  all\
+  create  destroy  help  quit  show  update\n\n(hbnb) ')
 
-        # with patch('sys.stdin', StringIO('help\n')) as stdin,\
-            # patch('sys.stdout', new_callable=StringIO) as stdout:
-            # HBNBCommand().cmdloop()
-            # self.assertEqual(stdout.getvalue(),
-            # '(hbnb) \nDocumented commands (type help <topic>):\n\
-# ========================================\nEOF  all\
-  # create  destroy  help  quit  show  update\n\n(hbnb) ')
+    def test_help_show(self):
+        """Test show command"""
+        with patch('sys.stdin', StringIO('help show\n')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
+            HBNBCommand().cmdloop()
+            self.assertEqual(stdout.getvalue(), '(hbnb) ' +
+                             HBNBCommand.do_show.__doc__ + '\n(hbnb) ')
 
-    # def test_help_show(self):
-        # with patch('sys.stdin', StringIO('help show\n')) as stdin,\
-            # patch('sys.stdout', new_callable=StringIO) as stdout:
-            # HBNBCommand().cmdloop()
-            # self.assertEqual(stdout.getvalue(), '(hbnb) ' +
-            # HBNBCommand.do_show.__doc__ + '\n(hbnb) ')
-
-    # def test_sintax_error(self):
-        # with patch('sys.stdin', StringIO('<c-d>')) as stdin,\
-            # patch('sys.stdout', new_callable=StringIO) as stdout:
-            # HBNBCommand().cmdloop()
-            # self.assertEqual(stdout.getvalue(),
-            # '(hbnb) *** Unknown syntax: <c-d>\n(hbnb) ')
-
-    # def test_EOF(self):
-        # with patch('sys.stdin', StringIO('<c-d>')) as stdin,\
-            # patch('sys.stdout', new_callable=StringIO) as stdout:
-            # HBNBCommand().cmdloop()
-            # self.assertEqual(stdout.getvalue(),
-            # '(hbnb) *** Unknown syntax: <c-d>\n(hbnb) ')
+    def test_sintax_error(self):
+        """test sintax error message"""
+        with patch('sys.stdin', StringIO('<c-d>'))\
+                as stdin, patch('sys.stdout', new_callable=StringIO) as stdout:
+            HBNBCommand().cmdloop()
+            self.assertEqual(stdout.getvalue(),
+                             '(hbnb) *** Unknown syntax: <c-d>\n(hbnb) ')
 
     # @patch('console.HBNBCommand')
     # def test_signal_handling(self, mock_print):
