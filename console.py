@@ -145,7 +145,6 @@ class HBNBCommand(cmd.Cmd):
             self.do_show(cls.__name__+" "+arg[6:-2])
         elif arg[:9] == 'destroy("':
             self.do_destroy(cls.__name__+" "+arg[9:-2])
-            self.do_destroy(cls.__name__+" "+arg[10:-2])
         elif arg[:7] == 'update(':
             entrada = arg[7:-1].replace("'", '"')
             list_arg = json.loads("[" + entrada + "]")
