@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """This module has the test for the base class"""
+from tests import reader
+import models
 import unittest
 from unittest.mock import patch
 from io import StringIO
@@ -15,7 +17,17 @@ class MyTestCase(unittest.TestCase):
     Test console commands
     """
 
+    def setUp(self):
+        reader.readed = 0
+        if os.path.isfile('file.json'):
+            os.remove('file.json')
+
+    def tearDown(self):
+        if os.path.isfile('file.json'):
+            os.remove('file.json')
+
     def test_basic_io(self):
+        reader.readed = 0
         """This is just a example test, don't forget to delete eventually"""
         with patch('sys.stdin', StringIO('Darcy\n')) as stdin,\
                 patch('sys.stdout', new_callable=StringIO) as stdout:
@@ -62,6 +74,14 @@ class MyTestCase(unittest.TestCase):
             HBNBCommand().cmdloop()
             self.assertEqual(stdout.getvalue(),
                              '(hbnb) *** Unknown syntax: <c-d>\n(hbnb) ')
+
+    def test_show_function(self):
+        with patch('sys.stdout', new=StringIO()) as stdout:
+            HBNBCommand().onecmd('create User')
+            User_id = reader.read(stdout)[:-1]
+            HBNBCommand().onecmd('show User '+User_id)
+            self.assertEqual(reader.read(stdout),
+                             str(models.storage.all()['User.'+User_id])+"\n")
 
     # @patch('console.HBNBCommand')
     # def test_signal_handling(self, mock_print):
