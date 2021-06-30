@@ -141,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(cls.__name__)
         elif arg == 'count()':
             print(sum([1 for o in storage.all().values() if type(o) == cls]))
-       elif arg[:7] == 'show("':
+        elif arg[:7] == 'show("':
             self.do_show(cls.__name__+" "+arg[7:-2])
             print(arg[7:-2])
         elif arg[:10] == 'destroy("':
@@ -166,4 +166,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop() 
+    HBNBCommand().cmdloop()
