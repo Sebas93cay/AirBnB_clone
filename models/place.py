@@ -2,6 +2,7 @@
 """This module define Place class"""
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """Define Place class inherint BaseModel"""
     city_id = ""
