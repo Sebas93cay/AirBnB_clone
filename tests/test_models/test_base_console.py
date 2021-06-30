@@ -4,6 +4,10 @@ import unittest
 from unittest.mock import patch
 from io import StringIO
 from console import HBNBCommand
+import time
+import os
+import threading
+import signal
 
 
 class MyTestCase(unittest.TestCase):
@@ -38,11 +42,43 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(stdout.getvalue(),
                              '(hbnb) \nDocumented commands (type help <topic>):\n\
 ========================================\nEOF  all\
-  create  destroy  help  quit  show  update\n\n(hbnb) \n')
+  create  destroy  help  quit  show  update\n\n(hbnb) ')
 
     def test_help_show(self):
         with patch('sys.stdin', StringIO('help show\n')) as stdin,\
                 patch('sys.stdout', new_callable=StringIO) as stdout:
             HBNBCommand().cmdloop()
             self.assertEqual(stdout.getvalue(), '(hbnb) ' +
-                             HBNBCommand.do_show.__doc__ + '\n(hbnb) \n')
+                             HBNBCommand.do_show.__doc__ + '\n(hbnb) ')
+
+    def test_sintax_error(self):
+        with patch('sys.stdin', StringIO('<c-d>')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
+            HBNBCommand().cmdloop()
+            self.assertEqual(stdout.getvalue(),
+                             '(hbnb) *** Unknown syntax: <c-d>\n(hbnb) ')
+
+    def test_EOF(self):
+        with patch('sys.stdin', StringIO('<c-d>')) as stdin,\
+                patch('sys.stdout', new_callable=StringIO) as stdout:
+            HBNBCommand().cmdloop()
+            self.assertEqual(stdout.getvalue(),
+                             '(hbnb) *** Unknown syntax: <c-d>\n(hbnb) ')
+
+    # @patch('console.HBNBCommand')
+    # def test_signal_handling(self, mock_print):
+        # pid = os.getpid()
+
+        # def trigger_signal():
+            # while len(mock_print.mock_calls[0]) < 1:
+            # time.sleep(0.2)
+            # os.kill(pid, signal.SIGINT)
+
+        # thread = threading.Thread(target=trigger_signal)
+        # thread.daemon = True
+        # thread.start()
+
+        # # HBNBCommand().cmdloop()
+        # # print(mock_print.__dict__)
+        # print(mock_print.mock_calls[0])
+        # self.assertEqual(mock_print.mock_calls[0], 'Some cleanup')
