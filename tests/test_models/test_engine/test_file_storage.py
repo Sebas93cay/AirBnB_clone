@@ -42,14 +42,21 @@ class TestFileStorage_instantiation(unittest.TestCase):
             FileStorage({})
             FileStorage(None)
 
-    def test_fileStorage_attrs(self):
-        """check the attributes of FileStorage class"""
+    def test_fileStorage_attr_objects(self):
+        """check the attribute objects of FileStorage class"""
         self.assertEqual(dict, type(FileStorage._FileStorage__objects))
+
+        with self.assertRaises(AttributeError):
+            models.storage.__objects
+            models.storage.objects
+
+    def test_fileStorage_attr_file_path(self):
+        """check the attribute file of FileStorage class"""
         self.assertEqual(str, type(FileStorage._FileStorage__file_path))
 
         with self.assertRaises(AttributeError):
             models.storage.__file_path
-            models.storage.__objects
+            models.storage.file_path
 
     def test_fileStorage_all(self):
         """test normal use of function all """
@@ -133,7 +140,6 @@ class TestFileStorage_instantiation(unittest.TestCase):
         models.storage.reload()
         self.assertEqual(os.path.isfile('file.json'), False)
         self.assertEqual(models.storage.all(), {})
-
 
     def test_fileStorage_reload(self):
         """test correct use of reload function"""
