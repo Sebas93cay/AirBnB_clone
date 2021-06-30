@@ -144,57 +144,57 @@ class HBNBCommand(cmd.Cmd):
         # self.file.close()
         # self.file = None
 
-    def class_functions(self, cls, arg):
-        """
-        method for sintax: <clasname>.<method>
-        """
-        if arg == 'all()':
-            self.do_all(cls.__name__)
-        elif arg == 'count()':
-            print(sum([1 for o in storage.all().values() if type(o) == cls]))
-        elif arg[:6] == 'show("':
-            self.do_show(cls.__name__+" "+arg[6:-2])
-        elif arg[:9] == 'destroy("':
-            self.do_destroy(cls.__name__+" "+arg[9:-2])
-        elif arg[:7] == 'update(':
-            entrada = arg[7:-1].replace("'", '"')
-            try:
-                list_arg = json.loads("[" + entrada + "]")
-            except JSONDecodeError:
-                print("Argument Error")
-                return False
-            if len(list_arg) < 3:
-                if len(list_arg) > 1 and type(list_arg[1]) == dict:
-                    for key, value in list_arg[1].items():
-                        if self.validation_arguments(
-                                [cls.__name__, list_arg[0], key,
-                                 str(value)], 3):
-                            self.update(
-                                cls.__name__, list_arg[0], key, value)
-                else:
-                    print("** arguments missing")
-                    return False
-            elif type(list_arg[1]) == str:
-                if self.validation_arguments(
-                        [cls.__name__, list_arg[0], list_arg[1],
-                         str(list_arg[2])], 3):
-                    self.update(
-                        cls.__name__, list_arg[0], list_arg[1], list_arg[2])
-            else:
-                print("** wrong type of arguments")
-                return False
+    # def class_functions(self, cls, arg):
+        # """
+        # method for sintax: <clasname>.<method>
+        # """
+        # if arg == 'all()':
+        # self.do_all(cls.__name__)
+        # elif arg == 'count()':
+        # print(sum([1 for o in storage.all().values() if type(o) == cls]))
+        # elif arg[:6] == 'show("':
+        # self.do_show(cls.__name__+" "+arg[6:-2])
+        # elif arg[:9] == 'destroy("':
+        # self.do_destroy(cls.__name__+" "+arg[9:-2])
+        # elif arg[:7] == 'update(':
+        # entrada = arg[7:-1].replace("'", '"')
+        # try:
+        # list_arg = json.loads("[" + entrada + "]")
+        # except JSONDecodeError:
+        # print("Argument Error")
+        # return False
+        # if len(list_arg) < 3:
+        # if len(list_arg) > 1 and type(list_arg[1]) == dict:
+        # for key, value in list_arg[1].items():
+        # if self.validation_arguments(
+        # [cls.__name__, list_arg[0], key,
+        # str(value)], 3):
+        # self.update(
+        # cls.__name__, list_arg[0], key, value)
+        # else:
+        # print("** arguments missing")
+        # return False
+        # elif type(list_arg[1]) == str:
+        # if self.validation_arguments(
+        # [cls.__name__, list_arg[0], list_arg[1],
+        # str(list_arg[2])], 3):
+        # self.update(
+        # cls.__name__, list_arg[0], list_arg[1], list_arg[2])
+        # else:
+        # print("** wrong type of arguments")
+        # return False
 
-    def default(self, arg):
-        """
-        This functions validate if input does not
-        match with any of the do_methods
-        This functions checks if sintax is <classname>.<method>
-        """
-        args = arg.split('.')
-        if args[0] in storage.classes.keys():
-            self.class_functions(storage.classes[args[0]], args[1])
-        else:
-            print("*** Unknown syntax: {}".format(arg))
+    # def default(self, arg):
+        # """
+        # This functions validate if input does not
+        # match with any of the do_methods
+        # This functions checks if sintax is <classname>.<method>
+        # """
+        # args = arg.split('.')
+        # if args[0] in storage.classes.keys():
+        # self.class_functions(storage.classes[args[0]], args[1])
+        # else:
+        # print("*** Unknown syntax: {}".format(arg))
 
 
 if __name__ == '__main__':
