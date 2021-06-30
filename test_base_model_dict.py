@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
+#test a push in a repository cloned
 
 my_model = BaseModel()
 my_model.name = "Holberton"
@@ -23,3 +24,4 @@ print(type(my_new_model.created_at))
 
 print("--")
 print(my_model is my_new_model)
+"test"
