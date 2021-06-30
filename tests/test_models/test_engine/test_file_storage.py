@@ -98,6 +98,7 @@ class TestFileStorage_instantiation(unittest.TestCase):
             models.storage.new({})
             models.storage.new("")
             models.storage.new(1)
+            models.storage.new(Place(), 1)
             models.storage.new(None)
 
     def test_fileStorage_new_no_args(self):
@@ -108,36 +109,50 @@ class TestFileStorage_instantiation(unittest.TestCase):
     def test_fileStorage_save(self):
         """test normal use of function save"""
         p = Place()
+        b = BaseModel()
         models.storage.new(p)
+        models.storage.new(b)
         models.storage.save()
 
         with open("file.json", "r") as f:
-            self.assertIn(p.id, f.read())
+            txt = f.read()
+            self.assertIn(p.id, txt)
+            self.assertIn(b.id, txt)
 
     def test_fileStorage_save_args(self):
         """test arguments of function save"""
         with self.assertRaises(TypeError):
             models.storage.save([])
             models.storage.save(User())
-            models.storage.save({})
+            models.storage.save({}, 45)
             models.storage.save("")
+            models.storage.save(None)
 
-    def test_fileStorage_reload(self):
-        """test correct use of reload function"""
+    def test_fileStorage_reload_withput_file(self):
+        """test reload witout file.json"""
         models.storage.reload()
         self.assertEqual(os.path.isfile('file.json'), False)
         self.assertEqual(models.storage.all(), {})
 
+
+    def test_fileStorage_reload(self):
+        """test correct use of reload function"""
         u = User()
+        r = Review()
         models.storage.new(u)
+        models.storage.new(r)
         models.storage.save()
         FileStorage._FileStorage__objects = {}
         models.storage.reload()
 
         self.assertIn("User." + u.id, models.storage.all().keys())
+        self.assertIn("Review." + r.id, models.storage.all().keys())
 
     def test_fileStorage_reload_args(self):
         """test arguments of function reload"""
         with self.assertRaises(TypeError):
             models.storage.reload(None)
             models.storage.reload([])
+
+if __name__ == "__main__":
+    unittest.main()
