@@ -74,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
             try:
                 b = storage.all()[arg[0] + "." + arg[1]]
 
-                if argl[2] in b.__class__.__dict__.keys()
+                if arg[2] in b.__class__.__dict__.keys():
                     clsAttr = type(getattr(b, arg[2], ""))
                     setattr(b, arg[2], clesAttr(arg[3]))
                 else:
@@ -141,7 +141,6 @@ class HBNBCommand(cmd.Cmd):
         elif arg[:7] == 'update(':
             entrada = arg[7:-1].replace("'", '"')
             list_arg = json.loads("["+ entrada + "]")
-            print(list_arg)
             inp = cls.__name__ + (" " + " ".join(list_arg)) if list_arg else ""
             self.do_update(inp)
 
