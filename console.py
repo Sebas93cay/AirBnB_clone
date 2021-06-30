@@ -141,10 +141,10 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(cls.__name__)
         elif arg == 'count()':
             print(sum([1 for o in storage.all().values() if type(o) == cls]))
-        elif arg[:7] == 'show("':
-            self.do_show(cls.__name__+" "+arg[7:-2])
-            print(arg[7:-2])
-        elif arg[:10] == 'destroy("':
+        elif arg[:6] == 'show("':
+            self.do_show(cls.__name__+" "+arg[6:-2])
+        elif arg[:9] == 'destroy("':
+            self.do_destroy(cls.__name__+" "+arg[9:-2])
             self.do_destroy(cls.__name__+" "+arg[10:-2])
         elif arg[:7] == 'update(':
             entrada = arg[7:-1].replace("'", '"')
