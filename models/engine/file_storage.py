@@ -33,7 +33,7 @@ class FileStorage:
 
     def reload(self):
         """
-        This reads all the objects from the json file and 
+        This reads all the objects from the json file and
         save them into the __objects variable
         """
         try:
@@ -49,7 +49,7 @@ class FileStorage:
 
     def save(self):
         """
-        This functions rewrite the json file with the objects from 
+        This functions rewrite the json file with the objects from
         the __objects variable
         """
         eldir = {}
