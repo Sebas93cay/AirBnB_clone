@@ -6,7 +6,6 @@ This module contains the console
 
 import cmd
 import json
-from json.decoder import JSONDecodeError
 from models import storage
 
 
