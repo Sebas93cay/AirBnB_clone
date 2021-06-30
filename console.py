@@ -13,6 +13,9 @@ from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
+    """
+    This is the console inherinted from cmd
+    """
     prompt = '(hbnb) '
     # file = None
 
@@ -98,6 +101,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
+        """Do nothing when line is empty"""
         pass
 
     def do_EOF(self, arg):
@@ -116,7 +120,8 @@ class HBNBCommand(cmd.Cmd):
         if 1 <= maxValidations and len(args_array) < 1:
             print("** class name missing **")
             return False
-        elif 1 <= maxValidations and args_array[0] not in storage.classes.keys():
+        elif 1 <= maxValidations and args_array[0] not in\
+                storage.classes.keys():
             print("** class doesn't exist **")
             return False
         elif 2 <= maxValidations and len(args_array) < 2:
@@ -142,6 +147,9 @@ class HBNBCommand(cmd.Cmd):
         # self.file = None
 
     def class_functions(self, cls, arg):
+        """
+        method for sintax: <clasname>.<method>
+        """
         if arg == 'all()':
             self.do_all(cls.__name__)
         elif arg == 'count()':
@@ -181,16 +189,16 @@ class HBNBCommand(cmd.Cmd):
                 return False
 
     def default(self, arg):
+        """
+        This functions validate if input does not
+        match with any of the do_methods
+        This functions checks if sintax is <classname>.<method>
+        """
         args = arg.split('.')
         if args[0] in storage.classes.keys():
             self.class_functions(storage.classes[args[0]], args[1])
         else:
             print("*** Unknown syntax: {}".format(arg))
-
-
-def parse(arg):
-    'Convert a series of zero or more numbers to an argument tuple'
-    return tuple(map(int, arg.split()))
 
 
 if __name__ == '__main__':
