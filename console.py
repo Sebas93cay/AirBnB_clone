@@ -72,13 +72,18 @@ class HBNBCommand(cmd.Cmd):
         if self.validation_arguments(arg, 3):
             arg = '["' + arg[0] + '","' + arg[1] + \
                 '","' + arg[2] + '", ' + arg[3] + "]"
+            arg = json.loads(arg)
             try:
-                arg = json.loads(arg)
-            except JSONDecodeError as e:
+                b = storage.all()[arg[0] + "." + arg[1]]
+
+                if arg[2] in b.__class__.__dict__.keys():
+                    clsAttr = type(getattr(b, arg[2], ""))
+                    setattr(b, arg[2], clsAttr(arg[3]))
+                else:
+                    setattr(b, arg[2], arg[3])
+                b.save()
+            except ValueError as e:
                 print(e)
-                print("Value not supported")
-                return False
-            self.update(arg[0], arg[1], arg[2], arg[3])
 
     def update(self, cls_s, id_s, attribute, value):
         """
