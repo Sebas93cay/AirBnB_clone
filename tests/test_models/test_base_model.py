@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module has the test for the base class"""
 import io
+import os
 from contextlib import redirect_stdout
 from models.base_model import BaseModel
 from datetime import datetime
@@ -23,6 +24,21 @@ class testBaseModel(unittest.TestCase):
         self.assertNotEqual(uptaded1, b1.updated_at)
         self.assertIsInstance(b1.created_at, datetime)
         self.assertIsInstance(b1.updated_at, datetime)
+
+    def test_base_model_save_jsonfile(self):
+        """Check json file."""
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+
+        b = BaseModel()
+        b.save()
+        b_key = "BaseModel." + b.id
+
+        with open("file.json", "r") as file:
+            json_text = file.read()
+        self.assertTrue(b_key in json_text)
 
     def test_base_model_save_parameters(self):
         """test save parameter"""
