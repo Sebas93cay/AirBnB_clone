@@ -32,6 +32,7 @@ class testState(unittest.TestCase):
             b1.save(212)
             b1.save("str")
             b1.save({})
+
     def test_state_class_name(self):
         """check the class attr name in State"""
         self.assertEqual(str, type(State.name))
