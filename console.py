@@ -69,14 +69,14 @@ class HBNBCommand(cmd.Cmd):
             arg = arg.split(' ')
 
         if self.validation_arguments(arg, 3):
-            arg = '["' + arg[0] + '","' + arg[1] + \
-                '","' + arg[2] + '", ' + arg[3] + "]"
-            try:
-                arg = json.loads(arg)
-            except Exception as e:
-                print(e)
-                print("Value not supported")
-                return False
+#            arg = '["' + arg[0] + '","' + arg[1] + \
+#                '","' + arg[2] + '", ' + arg[3] + "]"
+#            try:
+#                arg = json.loads(arg)
+#            except Exception as e:
+#                print(e)
+#                print("Value not supported")
+#                return False
             self.update(arg[0], arg[1], arg[2], arg[3])
 
     def update(self, cls_s, id_s, attribute, value):
