@@ -138,10 +138,21 @@ class HBNBCommand(cmd.Cmd):
 
         return True
 
-    # def close(self):
-        # if self.file:
-        # self.file.close()
-        # self.file= None
+    def act_one_method_class(self, cls, method, text):
+        """
+        This functions execute the method method
+        of the class cls with the arguments text
+        """
+        text = text.replace("'", '"')
+        try:
+            args_parsed = json.loads("[" + text + "]")
+        except Exception as e:
+            print("Argument Error")
+            print(e)
+            args_parsed = False
+
+        if args_parsed:
+            method(cls.__name__+" "+args_parsed[0])
 
     def class_functions(self, cls, arg):
         """
@@ -151,10 +162,10 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(cls.__name__)
         elif arg == 'count()':
             print(sum([1 for o in storage.all().values() if type(o) == cls]))
-        elif arg[:6] == 'show("':
-            self.do_show(cls.__name__+" "+arg[6:-2])
-        elif arg[:9] == 'destroy("':
-            self.do_destroy(cls.__name__+" "+arg[9:-2])
+        elif arg[:5] == 'show(':
+            self.act_one_method_class(cls, self.do_show, arg[5:-1])
+        elif arg[:8] == 'destroy(':
+            self.act_one_method_class(cls, self.do_destroy, arg[8:-1])
         elif arg[:7] == 'update(':
             entrada = arg[7:-1].replace("'", '"')
             try:
@@ -183,6 +194,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** wrong type of arguments")
                 return False
+        else:
+            print("** not recognized method")
 
     def default(self, arg):
         """
