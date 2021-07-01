@@ -118,7 +118,7 @@ class TestFileStorage_instantiation(unittest.TestCase):
         p = Place()
         b = BaseModel()
         models.storage.new(p)
-        models.storage.new(b)
+        b.save()
         models.storage.save()
 
         with open("file.json", "r") as f:
