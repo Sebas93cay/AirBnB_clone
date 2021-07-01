@@ -77,7 +77,8 @@ class HBNBCommand(cmd.Cmd):
 #                print(e)
 #                print("Value not supported")
 #                return False
-            self.update(arg[0], arg[1], arg[2], arg[3])
+            self.update(arg[0], arg[1], arg[2],
+                        arg[3].replace("'", "").replace('"',''))
 
     def update(self, cls_s, id_s, attribute, value):
         """
@@ -87,7 +88,10 @@ class HBNBCommand(cmd.Cmd):
         obj = storage.all()[cls_s+"."+id_s]
         if attribute in obj.__class__.__dict__.keys():
             clsAttr = type(getattr(obj, attribute, ""))
-            setattr(obj, attribute, clsAttr(value))
+            try:
+                setattr(obj, attribute, clsAttr(value))
+            except:
+                return
         else:
             setattr(obj, attribute, value)
         obj.save()
