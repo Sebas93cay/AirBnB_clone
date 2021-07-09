@@ -1,0 +1,87 @@
+
+body>.container>.filters{
+	background-color: white;
+	height: 70px;
+	width: 100%;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	bottom: 0;
+}
+
+body>.container>.filters>div{
+	height: 100%;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	[>align-items: flex-start;<]
+}
+body>.container>.filters>div>h3{
+	font-weight: 600;
+	margin-bottom: 4px;
+	margin-left: 20%;
+}
+body>.container>.filters>div>h4{
+	font-weight: 400;
+	font-size: 14px;
+	margin-top: 0;
+	margin-left: 20%;
+}
+body>.container>.filters>div:first-child{
+	border-right: 1px solid #DDDDDD;
+}
+
+body>.container>.filters>div>.popover{
+	width: 100%;
+	border: 1px solid #DDDDDD;
+	background: #FAFAFA;
+	margin: 0 auto;
+	padding: 10px;
+	list-style: none;
+	font-weight: 900;
+	padding: 15%;
+	position: absolute;
+	top: 100%;
+	pointer-events: none;
+	opacity: 0;
+	transition: all 0.4s ease;
+}
+
+.filters>.locations:hover .popover,
+.filters>.amenities:hover .popover{
+	opacity: 100%;
+}
+
+/*No Margin for first State*/
+body>.container>.filters>div>.popover > li:first-child > h2{
+	margin-top: 0;
+}
+
+body>.container>.filters>div>ul li{
+	margin: 5px auto;
+	font-weight: 500;
+}
+
+body>.container>.filters>div>ul>ul{
+	list-style: none;
+}
+
+body>.container>.filters>button{
+	font-size: 18px;
+	background: #FF5A5F;
+	color: #FFFFFF;
+	height: 48px;
+	width: 20%;
+	border: 0;
+	border-radius: 4px;
+	position: absolute;
+	right: 30px;
+}
+
+body>.container>.filters>button:hover{
+	opacity: 90%;
+}
+
