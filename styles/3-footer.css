@@ -1,6 +1,6 @@
 footer{
 	background-color:white;
-	height: 60px;
+	height: var(--footer-height);
 	width: 100%;
 	border-top: 1px solid #CCCCCC;
 	position:absolute;

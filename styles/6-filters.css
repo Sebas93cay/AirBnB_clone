@@ -49,6 +49,7 @@ body>.container>.filters>div>.popover{
 	opacity: 0;
 	transition: all 0.4s ease;
 	transform: translateY(10px);
+	z-index: 10;
 }
 
 .filters>.locations:hover .popover,
