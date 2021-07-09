@@ -48,11 +48,14 @@ body>.container>.filters>div>.popover{
 	pointer-events: none;
 	opacity: 0;
 	transition: all 0.4s ease;
+	transform: translateY(10px);
 }
 
 .filters>.locations:hover .popover,
 .filters>.amenities:hover .popover{
 	opacity: 100%;
+	pointer-events: all;
+	transform: translateY(0);
 }
 
 /*No Margin for first State*/
