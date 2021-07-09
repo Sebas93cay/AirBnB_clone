@@ -1,0 +1,50 @@
+
+body>.container>.filters{
+	background-color: white;
+	height: 70px;
+	width: 100%;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	bottom: 0;
+}
+
+body>.container>.filters>div{
+	height: 100%;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding-left: 5%;
+}
+body>.container>.filters>div>h3{
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+body>.container>.filters>div>h4{
+	font-weight: 400;
+	font-size: 14px;
+	margin-top: 0;
+}
+body>.container>.filters>div:first-child{
+	border-right: 1px solid #DDDDDD;
+}
+
+
+body>.container>.filters>button{
+	font-size: 18px;
+	background: #FF5A5F;
+	color: #FFFFFF;
+	height: 48px;
+	width: 20%;
+	border: 0;
+	border-radius: 4px;
+	position: absolute;
+	right: 30px;
+}
+
+body>.container>.filters>button:hover{
+	opacity: 90%;
+}
