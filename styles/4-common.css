@@ -3,7 +3,9 @@
 }
 :root{
 	--little-icon-size: 50px;
+	--little-icon-2-size: 30px;
 	--footer-height: 60px;
+	--std-space: 15px;
 }
 body{
 	margin: 0;

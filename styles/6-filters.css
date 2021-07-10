@@ -17,8 +17,8 @@ body>.container>.filters>div{
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	[>align-items: flex-start;<]
 }
+
 body>.container>.filters>div>h3{
 	font-weight: 600;
 	margin-bottom: 4px;
@@ -50,6 +50,7 @@ body>.container>.filters>div>.popover{
 	transition: all 0.4s ease;
 	transform: translateY(10px);
 	z-index: 10;
+	box-sizing: border-box;
 }
 
 .filters>.locations:hover .popover,
