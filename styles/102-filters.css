@@ -1,0 +1,109 @@
+
+.filters{
+	background-color: white;
+	height: 70px;
+	width: 100%;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	bottom: 0;
+}
+
+.filters>div{
+	height: 100%;
+	width: 25%;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.filters>div>h3{
+	font-weight: 600;
+	margin-bottom: 4px;
+	margin-left: 20%;
+}
+.filters>div>h4{
+	font-weight: 400;
+	font-size: 14px;
+	margin-top: 0;
+	margin-left: 20%;
+}
+.filters>div:first-child{
+	border-right: 1px solid #DDDDDD;
+}
+
+.filters>div>.popover{
+	width: 100%;
+	border: 1px solid #DDDDDD;
+	background: #FAFAFA;
+	margin: 0 auto;
+	padding: 10px;
+	list-style: none;
+	font-weight: 900;
+	padding: 15%;
+	position: absolute;
+	top: 100%;
+	pointer-events: none;
+	opacity: 0;
+	transition: all 0.4s ease;
+	transform: translateY(10px);
+	z-index: 10;
+	box-sizing: border-box;
+}
+
+.filters>.locations:hover .popover,
+.filters>.amenities:hover .popover{
+	opacity: 100%;
+	pointer-events: all;
+	transform: translateY(0);
+}
+
+/*No Margin for first State*/
+.filters>div>.popover > li:first-child > h2{
+	margin-top: 0;
+}
+
+.filters>div>ul li{
+	margin: 5px auto;
+	font-weight: 500;
+}
+
+.filters>div>ul>ul{
+	list-style: none;
+}
+
+.filters>button{
+	font-size: 18px;
+	background: #FF5A5F;
+	color: #FFFFFF;
+	height: 48px;
+	width: 20%;
+	border: 0;
+	border-radius: 4px;
+	position: absolute;
+	right: 30px;
+}
+
+.filters>button:hover{
+	opacity: 90%;
+}
+
+@media screen and (max-width: 800px){
+	.filters>.locations:focus .popover,
+	.filters>.amenities:focus .popover{
+		opacity: 100%;
+		pointer-events: all;
+		transform: translateY(0);
+	}
+	.filters>.locations:hover .popover,
+	.filters>.amenities:hover .popover{
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(10px);
+	}
+
+
+}
+
