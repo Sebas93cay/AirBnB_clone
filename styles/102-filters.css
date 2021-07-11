@@ -1,4 +1,3 @@
-
 .filters{
 	background-color: white;
 	height: 70px;
@@ -17,6 +16,23 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
+}
+.filters>div>.little-icon-3{
+	display: none;
+	width: var(--little-icon-3-size);
+	height: var(--little-icon-3-size);
+}
+.states-icon{
+	background: url("../images/icon-states.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.sofa-icon{
+	background: url("../images/icon_sofa.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .filters>div>h3{
@@ -90,20 +106,37 @@
 	opacity: 90%;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 1000px){
 	.filters>.locations:focus .popover,
 	.filters>.amenities:focus .popover{
 		opacity: 100%;
 		pointer-events: all;
 		transform: translateY(0);
 	}
-	.filters>.locations:hover .popover,
-	.filters>.amenities:hover .popover{
-		opacity: 0;
-		pointer-events: none;
-		transform: translateY(10px);
+	.filters>div{
+		display: flex;
+		align-items: center;
+		/*justify-items: center;*/
+		justify-content: center;
 	}
-
-
+	.filters>div>h3{
+		margin: 0;
+	}
+	.filters>div>h4{
+		display: none;
+	}
+	.filters>div>.popover{
+		width: 50vw;
+		position: absolute;
+		left: 0;
+	}
 }
 
+@media screen and (max-width: 600px){
+	.filters>div>.little-icon-3{
+		display: block;
+	}
+	.filters>div>h3{
+		display: none;
+	}
+}

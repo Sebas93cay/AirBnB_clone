@@ -17,3 +17,8 @@ div.logo-div{
 	width: 142px;
 }
 
+@media screen and (max-width: 1200px){
+	header{
+		justify-content: center;
+	}
+}

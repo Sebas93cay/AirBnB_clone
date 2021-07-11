@@ -4,9 +4,12 @@
 :root{
 	--little-icon-size: 50px;
 	--little-icon-2-size: 30px;
+	--little-icon-3-size: 40px;
 	--footer-height: 60px;
 	--std-space: 15px;
+	--price-size: 70px;
 }
+
 body{
 	margin: 0;
 	padding:0;
@@ -19,7 +22,8 @@ body{
 	position: relative;
 	padding-bottom: var(--footer-height);
 }
-body>.container{
+
+.container{
 	width: 80%;
 	max-width: 1000px;
 	margin: 30px 0;
@@ -28,4 +32,10 @@ body>.container{
 
 .container > section{
 	margin: 10px auto;
+}
+
+@media screen and (max-width: 600px){
+	.container{
+		width: 90%;
+	}
 }
